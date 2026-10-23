@@ -4,7 +4,7 @@ window.profile = {
   name: "keram",
   role: "Ph.D. in Transportation Engineering",
   school: "School of Science and Technology, Changsha",
-  photo: "", // Example: "assets/profile.jpg" after uploading your own photo.
+  photo: "profile.jpg", // Example: "assets/profile.jpg" after uploading your own photo.
   cv: "", // Example: "assets/cv.pdf" after uploading your CV.
   biography: [
     "Welcome to my personal academic website. I am keram. My academic background is in Transportation Engineering at the School of Science and Technology, Changsha.",
