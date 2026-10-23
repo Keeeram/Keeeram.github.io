@@ -3,6 +3,8 @@ const p = window.profile;
 const el = (tag, text, cls) => { const n = document.createElement(tag); n.textContent = text; if (cls) n.className = cls; return n; };
 const safeLink = value => { try { const u = new URL(value, location.href); return ["https:", "http:"].includes(u.protocol) ? u.href : null; } catch { return null; } };
 document.querySelector("#profile-name").textContent = p.name;
+document.querySelector("#hero-name").textContent = p.name;
+document.title = p.name + " | Transportation Engineering";
 document.querySelector("#profile-role").textContent = p.role;
 document.querySelector("#profile-school").textContent = p.school;
 p.biography.forEach(text => document.querySelector("#biography").append(el("p", text)));
@@ -27,3 +29,14 @@ p.publications.forEach((item, i) => {
 if (!p.updates.length) empty("#update-list", "Academic news and research updates will appear here.");
 p.updates.forEach(item => { const row = el("article", "", "update"); row.append(el("span", item.date, "record-date"), el("p", item.text)); document.querySelector("#update-list").append(row); });
 document.querySelector("#year").textContent = new Date().getFullYear();
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const sections = [...document.querySelectorAll("main section")];
+const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (entry.isIntersecting) {
+    document.querySelectorAll("nav a").forEach(a => a.classList.toggle("active", a.hash === "#" + entry.target.id));
+  }
+}), { rootMargin: "-15% 0px -60% 0px" });
+sections.forEach(s => observer.observe(s));
+function progress() { const total = document.documentElement.scrollHeight - innerHeight; document.querySelector(".reading-progress").style.width = (total > 0 ? scrollY / total * 100 : 0) + "%"; }
+addEventListener("scroll", progress, {passive:true}); progress();
+if (!reducedMotion) document.querySelectorAll(".section-heading, .record, .empty").forEach((n,i) => n.animate([{opacity:0,transform:"translateY(12px)"},{opacity:1,transform:"translateY(0)"}],{duration:650,delay:Math.min(i*70,450),fill:"backwards"}));
